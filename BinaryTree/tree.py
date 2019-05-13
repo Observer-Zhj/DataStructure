@@ -140,6 +140,26 @@ class BinaryTree:
         stack.pop()
         return paths
 
+    @classmethod
+    def minDepth(cls, root: TreeNode) -> int:
+        """ 二叉树最小深度 """
+        if not root:
+            return 0
+        stack = [root]
+        depth = 1
+        while stack:
+            tmp = []
+            for node in stack:
+                if node.left:
+                    tmp.append(node.left)
+                if node.right:
+                    tmp.append(node.right)
+                if not (node.left or node.right):
+                    return depth
+            depth += 1
+            stack = tmp
+        return depth
+
 
 
 """
