@@ -101,6 +101,45 @@ class BinaryTree:
         cls._postorder_traversal(root.right, res)
         res.append(root.val)
 
+    @classmethod
+    def invertTree(cls, root: TreeNode) -> TreeNode:
+        """ 翻转二叉树 """
+        if not root:
+            return root
+        left = cls.invertTree(root.right)
+        right = cls.invertTree(root.left)
+        root.right = right
+        root.left = left
+        return root
+
+    @classmethod
+    def isSameTree(cls, p: TreeNode, q: TreeNode) -> bool:
+        """ 判断两棵树是否相同 """
+        if p and q and p.val == q.val:
+            return cls.isSameTree(p.left, q.left) and cls.isSameTree(p.right, q.right)
+        elif p or q:
+            return False
+        else:
+            return True
+
+    @classmethod
+    def binaryTreePaths(cls, root: TreeNode):
+        """ 返回所有从根节点到叶子节点的路径 """
+        stack, paths = [], []
+        return cls._binaryTreePaths(root, stack, paths)
+
+    def _binaryTreePaths(cls, root: TreeNode, stack, paths):
+        if not root:
+            return paths
+        stack.append(root)
+        if not root.left and not root.right:
+            paths.append("->".join(str(x.val) for x in stack))
+        else:
+            cls._binaryTreePaths(root.left, stack, paths)
+            cls._binaryTreePaths(root.right, stack, paths)
+        stack.pop()
+        return paths
+
 
 
 """
