@@ -1,24 +1,22 @@
 package cn.zhj.linkedlist;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-
 public class MyLinkedList<E extends Comparable<E>> {
+    /**
+     * 单链表，主要实现了插入节点、删除节点、反转、交换和快排
+     */
     private int size = 0;
     private Node<E> head, tail;
 
     public MyLinkedList() {}
 
-    public MyLinkedList(@NotNull E[] array) {
+    public MyLinkedList(E[] array) {
         for (E e : array) {
             addLast(e);
         }
     }
 
     public void addFirst(E e) {
+        /** 在链表头插入元素 */
         Node<E> node = new Node<E>(e);
         node.next = head;
         head = node;
@@ -29,6 +27,7 @@ public class MyLinkedList<E extends Comparable<E>> {
     }
 
     public void addLast(E e) {
+        /** 在链表尾插入元素 */
         Node<E> node = new Node<E>(e);
         if (tail == null) {
             head = tail = node;
@@ -40,6 +39,7 @@ public class MyLinkedList<E extends Comparable<E>> {
     }
 
     public void add(int index, E e) {
+        /** 在指定位置插入元素 */
         if (index == 0) {
             addFirst(e);
         } else if (index >= size) {
@@ -93,6 +93,7 @@ public class MyLinkedList<E extends Comparable<E>> {
     }
 
     public E removeFirst() {
+        /** 删除链表头 */
         if (size == 0)
             return null;
         if (size == 1) {
@@ -108,6 +109,7 @@ public class MyLinkedList<E extends Comparable<E>> {
     }
 
     public E removeLast() {
+        /** 删除链表尾 */
         if (size == 0 || size == 1) {
             return removeFirst();
         }
@@ -123,6 +125,7 @@ public class MyLinkedList<E extends Comparable<E>> {
     }
 
     public E remove(int index) {
+        /** 删除指定位置节点 */
         if (index == 0)
             return removeFirst();
         if (index == size - 1)
@@ -195,6 +198,7 @@ public class MyLinkedList<E extends Comparable<E>> {
     }
 
     public void swap(int i, int j) {
+        /** 根据索引交换节点 */
         if (size == 0 || size == 1 || i-j == 0) {
             return;
         }
@@ -203,7 +207,9 @@ public class MyLinkedList<E extends Comparable<E>> {
             j = i;
             i = tmp;
         }
+        // 相邻节点交换
         if (j-i == 1) {
+            // 链表头参与交换
             if (i == 0) {
                 Node<E> temp = head.next;
                 head.next = temp.next;
@@ -223,7 +229,9 @@ public class MyLinkedList<E extends Comparable<E>> {
                     tail = current.next.next;
                 }
             }
+            // 不相邻节点交换
         } else {
+            // 链表头参与交换
             if (i == 0) {
                 Node<E> current = head;
                 for (int index = 1; index < j; index++) {
@@ -264,6 +272,7 @@ public class MyLinkedList<E extends Comparable<E>> {
     }
 
     public void reverse() {
+        /** 链表反转 */
         if (size == 0 || size == 1) {
             return;
         }
@@ -314,6 +323,7 @@ public class MyLinkedList<E extends Comparable<E>> {
 //    }
 
     public void quickSort() {
+        /** 链表快速排序，核心是分别用一个空节点指向小于指定元素的链表和大于指定元素的链表，然后拼接 */
         Node<E> pre = new Node<E> (null);
         pre.next = head;
         quickSort(pre, head, null);
